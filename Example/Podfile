@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'GKPictureInPictureView_Example' do
+  pod 'GKPictureInPictureView', :path => '../'
+
+  target 'GKPictureInPictureView_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
