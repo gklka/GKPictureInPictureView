@@ -8,16 +8,27 @@
 
 #import "GKViewController.h"
 
+@import GKPictureInPictureView;
+
+
 @interface GKViewController ()
 
+@property (nonatomic, strong) GKPictureInPictureView *pipView;
+
 @end
+
 
 @implementation GKViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
+    self.pipView = [GKPictureInPictureView new];
+    self.pipView.frame = CGRectMake(20, 40, 300, 200);
+    self.pipView.backgroundColor = [UIColor whiteColor];
+    
+    [self.view addSubview:self.pipView];
 }
 
 - (void)didReceiveMemoryWarning
