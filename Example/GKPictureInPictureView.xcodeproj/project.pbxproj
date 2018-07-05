@@ -247,6 +247,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = gklka;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = 9L2H2A796T;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -511,6 +514,7 @@
 			baseConfigurationReference = B37CEF3420F92EDB98706903 /* Pods-GKPictureInPictureView_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9L2H2A796T;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GKPictureInPictureView/GKPictureInPictureView-Prefix.pch";
 				INFOPLIST_FILE = "GKPictureInPictureView/GKPictureInPictureView-Info.plist";
@@ -527,6 +531,7 @@
 			baseConfigurationReference = C71EE5ADE8E35578DF6F0AEC /* Pods-GKPictureInPictureView_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9L2H2A796T;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GKPictureInPictureView/GKPictureInPictureView-Prefix.pch";
 				INFOPLIST_FILE = "GKPictureInPictureView/GKPictureInPictureView-Info.plist";

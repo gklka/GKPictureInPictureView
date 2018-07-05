@@ -20,21 +20,26 @@
 
 @implementation GKViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.pipView = [GKPictureInPictureView new];
-    self.pipView.frame = CGRectMake(20, 40, 300, 200);
-    self.pipView.backgroundColor = [UIColor whiteColor];
+    // Our gorgeous content view
+    UIView *contentView = [UIView new];
+    contentView.backgroundColor = [UIColor redColor];
     
-    [self.view addSubview:self.pipView];
+    // Init Picture in Picture view
+    self.pipView = [[GKPictureInPictureView alloc] initWithContentView:contentView];
+    self.pipView.sizeClass = GKPictureInPictureViewSizeLarge;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)show:(id)sender {
+    // Show it
+    [self.pipView addToSuperView:self.view animated:YES];
+}
+
+- (IBAction)hide:(id)sender {
+    // Hide it
+    [self.pipView removeFromSuperviewAnimated:YES];
 }
 
 @end
