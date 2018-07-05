@@ -14,6 +14,7 @@
 @interface GKViewController ()
 
 @property (nonatomic, strong) GKPictureInPictureView *pipView;
+@property (weak, nonatomic) IBOutlet GKPictureInPictureView *interfaceDesigner;
 
 @end
 
@@ -29,7 +30,11 @@
     
     // Init Picture in Picture view
     self.pipView = [[GKPictureInPictureView alloc] initWithContentView:contentView];
-    self.pipView.sizeClass = GKPictureInPictureViewSizeLarge;
+    self.pipView.accessibilityIdentifier = @"red";
+//    self.pipView.sizeClass = GKPictureInPictureViewSizeLarge;
+    
+//    [self show:nil];
+//    [self.interfaceDesigner addToSuperView:self.view animated:NO];
 }
 
 - (IBAction)show:(id)sender {

@@ -19,7 +19,6 @@ typedef NS_ENUM(NSUInteger, GKPictureInPictureViewSize) {
     GKPictureInPictureViewSizeLarge
 };
 
-
 @interface GKPictureInPictureView : UIView
 
 //! Small size of the view. The user can toggle size with a pinch gesture.
@@ -60,5 +59,21 @@ typedef NS_ENUM(NSUInteger, GKPictureInPictureViewSize) {
  @property animated Animate removing or not
  */
 - (void)removeFromSuperviewAnimated:(BOOL)animated;
+
+#pragma mark - Setting size
+
+/**
+ Set the position of the view
+ 
+ @property animated Animate setting or not
+ */
+- (void)setPosition:(GKPictureInPictureViewPosition)position animated:(BOOL)animated;
+
+/**
+ Set the size class of the view
+ 
+ @property animated Animate setting or not
+ */
+- (void)setSizeClass:(GKPictureInPictureViewSize)sizeClass animated:(BOOL)animated;
 
 @end
