@@ -1,9 +1,10 @@
 # GKPictureInPictureView
 
-[![CI Status](https://img.shields.io/travis/gklka/GKPictureInPictureView.svg?style=flat)](https://travis-ci.org/gklka/GKPictureInPictureView)
 [![Version](https://img.shields.io/cocoapods/v/GKPictureInPictureView.svg?style=flat)](https://cocoapods.org/pods/GKPictureInPictureView)
 [![License](https://img.shields.io/cocoapods/l/GKPictureInPictureView.svg?style=flat)](https://cocoapods.org/pods/GKPictureInPictureView)
 [![Platform](https://img.shields.io/cocoapods/p/GKPictureInPictureView.svg?style=flat)](https://cocoapods.org/pods/GKPictureInPictureView)
+
+Draggable, sizeable view which can placed in screen edges. Similar to FaceTime and PiP.
 
 ## Example
 
