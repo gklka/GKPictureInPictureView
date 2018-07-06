@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-FaceTime/iOS PiP like throwable view
+Draggable, sizeable view which can placed in screen edges. Similar to FaceTime and PiP.
                        DESC
 
   s.homepage         = 'https://github.com/gklka/GKPictureInPictureView'
@@ -29,6 +29,7 @@ FaceTime/iOS PiP like throwable view
   s.social_media_url = 'https://twitter.com/gklka'
 
   s.ios.deployment_target = '10.0'
+  s.platform         = :ios
 
   s.source_files = 'GKPictureInPictureView/Classes/**/*'
   
@@ -36,7 +37,7 @@ FaceTime/iOS PiP like throwable view
   #   'GKPictureInPictureView' => ['GKPictureInPictureView/Assets/*.png']
   # }
 
-  s.public_header_files = 'Pod/Classes/**/*.h'
+  # s.public_header_files = 'Pod/Classes/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end
