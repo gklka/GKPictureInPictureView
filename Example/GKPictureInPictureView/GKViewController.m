@@ -8,8 +8,6 @@
 
 #import "GKViewController.h"
 
-@import GKPictureInPictureView;
-
 
 @interface GKViewController ()
 
@@ -31,7 +29,18 @@
     // Init Picture in Picture view
     self.pipView = [[GKPictureInPictureView alloc] initWithContentView:contentView];
     self.pipView.accessibilityIdentifier = @"red";
+    self.pipView.smallSize = CGSizeMake(50.f, 50.f);
+    self.pipView.largeSize = CGSizeMake(70.f, 70.f);
 //    self.pipView.sizeClass = GKPictureInPictureViewSizeLarge;
+    
+    self.green.translatesAutoresizingMaskIntoConstraints = NO;
+    self.blue.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self.green setPosition:GKPictureInPictureViewPositionBottomLeft animated:NO];
+    
+    self.green.topRightPositionEnabled = NO;
+    self.green.topLeftPositionEnabled = NO;
+    self.green.resizeEnabled = NO;
     
 //    [self show:nil];
 //    [self.interfaceDesigner addToSuperView:self.view animated:NO];
@@ -39,7 +48,7 @@
 
 - (IBAction)show:(id)sender {
     // Show it
-    [self.pipView addToSuperView:self.view animated:YES];
+    [self.pipView addToSuperView:self.blue animated:YES];
 }
 
 - (IBAction)hide:(id)sender {

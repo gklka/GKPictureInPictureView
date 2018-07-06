@@ -103,6 +103,11 @@
     self.sizeClass = GKPictureInPictureViewSizeSmall;
     self.panInitialCenter = CGPointZero;
     self.decelerationRate = [UIScrollView new].decelerationRate;
+    self.topLeftPositionEnabled = YES;
+    self.topRightPositionEnabled = YES;
+    self.bottomLeftPositionEnabled = YES;
+    self.bottomRightPositionEnabled = YES;
+    self.resizeEnabled = YES;
     
     // Add constraints
     
@@ -121,17 +126,31 @@
 }
 
 - (void)setupConstraints {
+    if (!self.superview) return;
+    
     self.topConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.superview attribute:NSLayoutAttributeTop multiplier:1.f constant:Padding];
-    self.topConstraint.active = YES;
     self.leftConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.superview attribute:NSLayoutAttributeLeft multiplier:1.f constant:Padding];
+    self.topConstraint.active = YES;
     self.leftConstraint.active = YES;
 
     self.bottomConstraint = [NSLayoutConstraint constraintWithItem:self.superview attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.f constant:Padding];
-    self.bottomConstraint.active = NO;
     self.rightConstraint = [NSLayoutConstraint constraintWithItem:self.superview attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.f constant:Padding];
+    self.bottomConstraint.active = NO;
     self.rightConstraint.active = NO;
     
     NSLog(@"Setup constraints done for view: %@", self);
+}
+
+- (void)cleanConstraints {
+    self.topConstraint.active = NO;
+    self.leftConstraint.active = NO;
+    self.bottomConstraint.active = NO;
+    self.rightConstraint.active = NO;
+    
+    self.topConstraint = nil;
+    self.leftConstraint = nil;
+    self.bottomConstraint = nil;
+    self.rightConstraint = nil;
 }
 
 - (void)didMoveToSuperview {
@@ -189,6 +208,8 @@
 }
 
 - (void)pinch:(UIPinchGestureRecognizer *)gestureRecognizer {
+    if (!self.resizeEnabled) return;
+    
     if (gestureRecognizer.state != UIGestureRecognizerStateCancelled) {
         self.transform = CGAffineTransformMakeScale(gestureRecognizer.scale, gestureRecognizer.scale);
 
@@ -215,12 +236,18 @@
 
 - (void)setPosition:(GKPictureInPictureViewPosition)position {
     _position = position;
-//    [self refreshAnimated:NO];
+    if (self.delegate &&
+        [self.delegate respondsToSelector:@selector(pictureInPictureView:changedPosition:)]) {
+        [self.delegate pictureInPictureView:self changedPosition:position];
+    }
 }
 
 - (void)setSizeClass:(GKPictureInPictureViewSize)sizeClass {
     _sizeClass = sizeClass;
-//    [self refreshAnimated:NO];
+    if (self.delegate &&
+        [self.delegate respondsToSelector:@selector(pictureInPictureView:changedSizeClass:)]) {
+        [self.delegate pictureInPictureView:self changedSizeClass:sizeClass];
+    }
 }
 
 #pragma mark - <UIGestureRecognizerDelegate>
@@ -235,7 +262,6 @@
     if (self.superview) return;
     
     [self refreshAnimated:NO];
-//    self.frame = [self rectForPosition:self.position sizeClass:self.sizeClass inView:superview];
     [self setFarState];
     
     [superview addSubview:self];
@@ -252,18 +278,9 @@
         [self setFarState];
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
+        [self cleanConstraints];
         [self setNormalState];
     }];
-}
-
-- (void)setFarState {
-    self.alpha = 0;
-    self.transform = CGAffineTransformMakeScale(0.7f, 0.7f);
-}
-
-- (void)setNormalState {
-    self.alpha = 1;
-    self.transform = CGAffineTransformMakeScale(1.f, 1.f);
 }
 
 #pragma mark - Setting size
@@ -310,18 +327,26 @@
     CGPoint bottomLeftPosition = [self centerForRect:[self rectForPosition:GKPictureInPictureViewPositionBottomLeft sizeClass:self.sizeClass inView:self.superview]];
     CGPoint bottomRightPosition = [self centerForRect:[self rectForPosition:GKPictureInPictureViewPositionBottomRight sizeClass:self.sizeClass inView:self.superview]];
     
+    CGFloat winnerDistance = CGFLOAT_MAX;
     GKPictureInPictureViewPosition position = GKPictureInPictureViewPositionTopLeft;
-    CGFloat winnerDistance = fabs([self distanceBetweenPoint:point andPoint:topLeftPosition]);
     
-    if (fabs([self distanceBetweenPoint:point andPoint:topRightPosition]) < winnerDistance) {
+    if (fabs([self distanceBetweenPoint:point andPoint:topLeftPosition]) < winnerDistance &&
+        self.topLeftPositionEnabled) {
+        position = GKPictureInPictureViewPositionTopLeft;
+        winnerDistance = fabs([self distanceBetweenPoint:point andPoint:topLeftPosition]);
+    }
+    if (fabs([self distanceBetweenPoint:point andPoint:topRightPosition]) < winnerDistance &&
+        self.topRightPositionEnabled) {
         position = GKPictureInPictureViewPositionTopRight;
         winnerDistance = fabs([self distanceBetweenPoint:point andPoint:topRightPosition]);
     }
-    if (fabs([self distanceBetweenPoint:point andPoint:bottomLeftPosition]) < winnerDistance) {
+    if (fabs([self distanceBetweenPoint:point andPoint:bottomLeftPosition]) < winnerDistance &&
+        self.bottomLeftPositionEnabled) {
         position = GKPictureInPictureViewPositionBottomLeft;
         winnerDistance = fabs([self distanceBetweenPoint:point andPoint:bottomLeftPosition]);
     }
-    if (fabs([self distanceBetweenPoint:point andPoint:bottomRightPosition]) < winnerDistance) {
+    if (fabs([self distanceBetweenPoint:point andPoint:bottomRightPosition]) < winnerDistance &&
+        self.bottomRightPositionEnabled) {
         position = GKPictureInPictureViewPositionBottomRight;
         winnerDistance = fabs([self distanceBetweenPoint:point andPoint:bottomRightPosition]);
     }
@@ -348,33 +373,33 @@
         switch (self.position) {
             case GKPictureInPictureViewPositionTopLeft:
             {
-                self.leftConstraint.active = YES;
                 self.rightConstraint.active = NO;
-                self.topConstraint.active = YES;
                 self.bottomConstraint.active = NO;
+                self.leftConstraint.active = YES;
+                self.topConstraint.active = YES;
                 break;
             }
             case GKPictureInPictureViewPositionTopRight:
             {
                 self.leftConstraint.active = NO;
+                self.bottomConstraint.active = NO;
                 self.rightConstraint.active = YES;
                 self.topConstraint.active = YES;
-                self.bottomConstraint.active = NO;
                 break;
             }
             case GKPictureInPictureViewPositionBottomLeft:
             {
-                self.leftConstraint.active = YES;
                 self.rightConstraint.active = NO;
                 self.topConstraint.active = NO;
+                self.leftConstraint.active = YES;
                 self.bottomConstraint.active = YES;
                 break;
             }
             case GKPictureInPictureViewPositionBottomRight:
             {
                 self.leftConstraint.active = NO;
-                self.rightConstraint.active = YES;
                 self.topConstraint.active = NO;
+                self.rightConstraint.active = YES;
                 self.bottomConstraint.active = YES;
                 break;
             }
@@ -402,6 +427,16 @@
         [self.superview layoutIfNeeded];
 //        self.frame = [self rectForPosition:self.position sizeClass:self.sizeClass inView:self.superview];
     }];
+}
+
+- (void)setFarState {
+    self.alpha = 0;
+    self.transform = CGAffineTransformMakeScale(0.7f, 0.7f);
+}
+
+- (void)setNormalState {
+    self.alpha = 1;
+    self.transform = CGAffineTransformMakeScale(1.f, 1.f);
 }
 
 @end

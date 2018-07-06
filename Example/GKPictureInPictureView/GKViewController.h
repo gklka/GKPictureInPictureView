@@ -7,7 +7,11 @@
 //
 
 @import UIKit;
+@import GKPictureInPictureView;
 
 @interface GKViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet GKPictureInPictureView *green;
+@property (weak, nonatomic) IBOutlet GKPictureInPictureView *blue;
 
 @end
