@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4789423B20EF82CD00C9AE44 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4789423A20EF82CC00C9AE44 /* README.md */; };
 		59C6C164F1581B16EDA182DE /* Pods_GKPictureInPictureView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC4ACF53E79642FCDBB2EF5 /* Pods_GKPictureInPictureView_Example.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		20681AD6BCE7F2B6AAC38AB9 /* Pods-GKPictureInPictureView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GKPictureInPictureView_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GKPictureInPictureView_Tests/Pods-GKPictureInPictureView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		370C5EB90ADD68562C4967CC /* GKPictureInPictureView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = GKPictureInPictureView.podspec; path = ../GKPictureInPictureView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		4789423A20EF82CC00C9AE44 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* GKPictureInPictureView_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKPictureInPictureView_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -109,6 +111,7 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
+				4789423A20EF82CC00C9AE44 /* README.md */,
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F593195388D20070C39A /* Example for GKPictureInPictureView */,
 				6003F5B5195388D20070C39A /* Tests */,
@@ -281,6 +284,7 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
+				4789423B20EF82CD00C9AE44 /* README.md in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
