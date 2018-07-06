@@ -9,7 +9,7 @@
 #import "GKViewController.h"
 
 
-@interface GKViewController ()
+@interface GKViewController () <GKPictureInPictureViewDelegate>
 
 @property (nonatomic, strong) GKPictureInPictureView *pipView;
 @property (weak, nonatomic) IBOutlet GKPictureInPictureView *interfaceDesigner;
@@ -42,6 +42,8 @@
     self.green.topLeftPositionEnabled = NO;
     self.green.resizeEnabled = NO;
     
+    self.blue.delegate = self;
+    
 //    [self show:nil];
 //    [self.interfaceDesigner addToSuperView:self.view animated:NO];
 }
@@ -54,6 +56,10 @@
 - (IBAction)hide:(id)sender {
     // Hide it
     [self.pipView removeFromSuperviewAnimated:YES];
+}
+
+- (void)pictureInPictureView:(GKPictureInPictureView *)pictureInPictureView changedPosition:(GKPictureInPictureViewPosition)position {
+    [self.pipView setPosition:position animated:YES];
 }
 
 @end
