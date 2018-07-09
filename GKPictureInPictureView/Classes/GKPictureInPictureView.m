@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchGestureRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *doubleTapGestureRecognizer;
 @property (nonatomic) CGPoint panInitialCenter;
 
 @property (nonatomic, strong) NSLayoutConstraint *widthConstraint;
@@ -115,6 +116,7 @@
     // Handle gestures
     [self addGestureRecognizer:self.panGestureRecognizer];
     [self addGestureRecognizer:self.pinchGestureRecognizer];
+    [self addGestureRecognizer:self.doubleTapGestureRecognizer];
     
     // Width and height constraints
     self.widthConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.f constant:self.smallSize.width];
@@ -176,6 +178,15 @@
     return _pinchGestureRecognizer;
 }
 
+- (UITapGestureRecognizer *)doubleTapGestureRecognizer {
+    if (!_doubleTapGestureRecognizer) {
+        _doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+        _doubleTapGestureRecognizer.numberOfTapsRequired = 2;
+    }
+    
+    return _doubleTapGestureRecognizer;
+}
+
 - (void)pan:(UIPanGestureRecognizer *)gesutreRecognizer {
     if (!gesutreRecognizer.view) return;
     UIView *piece = gesutreRecognizer.view;
@@ -229,6 +240,13 @@
         }
     }
     
+}
+
+- (void)doubleTap:(UITapGestureRecognizer *)gestureRecognizer {
+    if (!gestureRecognizer.view) return;
+    
+    self.sizeClass = self.sizeClass==GKPictureInPictureViewSizeSmall ? GKPictureInPictureViewSizeLarge : GKPictureInPictureViewSizeSmall;
+    [self refreshAnimated:YES];
 }
 
 - (CGFloat)throwDistanceForInitialVelocity:(CGFloat)velocity {
