@@ -47,6 +47,9 @@ typedef NS_ENUM(NSUInteger, GKPictureInPictureViewSize) {
 
 @interface GKPictureInPictureView : UIView
 
+//! Space between the superview and the picture in picture view. (default: 10,10,10,10)
+@property (nonatomic) UIEdgeInsets padding;
+
 //! Small size of the view. The user can toggle size with a pinch gesture. (default: 200x124)
 @property (nonatomic) CGSize smallSize;
 
@@ -119,5 +122,12 @@ typedef NS_ENUM(NSUInteger, GKPictureInPictureViewSize) {
  @property animated Animate setting or not
  */
 - (void)setSizeClass:(GKPictureInPictureViewSize)sizeClass animated:(BOOL)animated;
+
+/**
+ Force refresh the position to the set values.
+ 
+ @param animated Animate the move or not
+ */
+- (void)refreshAnimated:(BOOL)animated;
 
 @end

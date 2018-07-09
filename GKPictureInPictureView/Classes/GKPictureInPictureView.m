@@ -97,6 +97,7 @@
     self.layer.shadowOffset = CGSizeMake(0, 2.f);
     
     // Default values
+    self.padding = UIEdgeInsetsMake(Padding, Padding, Padding, Padding);
     self.smallSize = CGSizeMake(200.f, 124.f);
     self.largeSize = CGSizeMake(300.f, 187.f);
     self.position = GKPictureInPictureViewPositionTopLeft;
@@ -128,13 +129,13 @@
 - (void)setupConstraints {
     if (!self.superview) return;
     
-    self.topConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.superview attribute:NSLayoutAttributeTop multiplier:1.f constant:Padding];
-    self.leftConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.superview attribute:NSLayoutAttributeLeft multiplier:1.f constant:Padding];
+    self.topConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.superview attribute:NSLayoutAttributeTop multiplier:1.f constant:self.padding.top];
+    self.leftConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.superview attribute:NSLayoutAttributeLeft multiplier:1.f constant:self.padding.left];
     self.topConstraint.active = YES;
     self.leftConstraint.active = YES;
 
-    self.bottomConstraint = [NSLayoutConstraint constraintWithItem:self.superview attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.f constant:Padding];
-    self.rightConstraint = [NSLayoutConstraint constraintWithItem:self.superview attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.f constant:Padding];
+    self.bottomConstraint = [NSLayoutConstraint constraintWithItem:self.superview attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.f constant:self.padding.bottom];
+    self.rightConstraint = [NSLayoutConstraint constraintWithItem:self.superview attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.f constant:self.padding.right];
     self.bottomConstraint.active = NO;
     self.rightConstraint.active = NO;
     
@@ -250,6 +251,15 @@
     }
 }
 
+- (void)setPadding:(UIEdgeInsets)padding {
+    _padding = padding;
+    if (self.leftConstraint) {
+        // Constraints are up
+        [self cleanConstraints];
+        [self setupConstraints];
+    }
+}
+
 #pragma mark - <UIGestureRecognizerDelegate>
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
@@ -302,13 +312,13 @@
 
     switch (position) {
         case GKPictureInPictureViewPositionTopRight:
-            return CGRectMake(view.frame.size.width - size.width - Padding, Padding, size.width, size.height);
+            return CGRectMake(view.frame.size.width - size.width - self.padding.right, self.padding.top, size.width, size.height);
         case GKPictureInPictureViewPositionBottomLeft:
-            return CGRectMake(Padding, view.frame.size.height - size.height - Padding, size.width, size.height);
+            return CGRectMake(self.padding.left, view.frame.size.height - size.height - self.padding.bottom, size.width, size.height);
         case GKPictureInPictureViewPositionBottomRight:
-            return CGRectMake(view.frame.size.width - size.width - Padding, view.frame.size.height - size.height - Padding, size.width, size.height);
+            return CGRectMake(view.frame.size.width - size.width - self.padding.right, view.frame.size.height - size.height - self.padding.bottom, size.width, size.height);
         default:
-            return CGRectMake(Padding, Padding, size.width, size.height);
+            return CGRectMake(self.padding.left, self.padding.top, size.width, size.height);
     }
 }
 
