@@ -71,17 +71,7 @@
     
     if (self) {
         [self setup];
-        
-        // Add user's view to our content
-        self.contentView = contentView;
-        self.contentView.layer.cornerRadius = 4.f;
-        self.contentView.layer.masksToBounds = YES;
-        self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-
-        [self addSubview:contentView];
-        
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[content]|" options:0 metrics:@{} views:@{@"content": contentView}]];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[content]|" options:0 metrics:@{} views:@{@"content": contentView}]];
+        [self addContent:contentView];
     }
     
     return self;
@@ -309,6 +299,19 @@
         [self cleanConstraints];
         [self setNormalState];
     }];
+}
+
+- (void)addContent:(UIView *)contentView {
+    // Add user's view to our content
+    self.contentView = contentView;
+    self.contentView.layer.cornerRadius = 4.f;
+    self.contentView.layer.masksToBounds = YES;
+    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self addSubview:contentView];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[content]|" options:0 metrics:@{} views:@{@"content": contentView}]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[content]|" options:0 metrics:@{} views:@{@"content": contentView}]];
 }
 
 #pragma mark - Setting size

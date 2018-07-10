@@ -86,7 +86,7 @@ typedef NS_ENUM(NSUInteger, GKPictureInPictureViewSize) {
 /**
  Designated initializer. The given content view will be displayed in the PiP frame.
  
- @property contentView The content view to display. Your content.
+ @property contentView The content view to display. Your content. The neccessary constraints will be added automatically.
  */
 - (instancetype)initWithContentView:(UIView *)contentView;
 
@@ -106,6 +106,13 @@ typedef NS_ENUM(NSUInteger, GKPictureInPictureViewSize) {
  @property animated Animate removing or not
  */
 - (void)removeFromSuperviewAnimated:(BOOL)animated;
+
+/**
+ If you didn't use the -initWithContentView: method for adding the content (for ex. you used Storyboards), you can add a content view later with this method. If a content view is already present, this method does nothing.
+ 
+ @property contentView The content view to display. Your content. The neccessary constraints will be added automatically.
+ */
+- (void)addContent:(UIView *)contentView;
 
 #pragma mark - Setting size
 
