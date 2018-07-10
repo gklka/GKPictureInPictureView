@@ -123,11 +123,18 @@ typedef NS_ENUM(NSUInteger, GKPictureInPictureViewSize) {
  */
 - (void)setSizeClass:(GKPictureInPictureViewSize)sizeClass animated:(BOOL)animated;
 
+#pragma mark - Other
+
 /**
  Force refresh the position to the set values.
  
  @param animated Animate the move or not
  */
 - (void)refreshAnimated:(BOOL)animated;
+
+/**
+ Returns YES if the picture in picture view is visible on screen
+ */
+- (BOOL)isVisible;
 
 @end

@@ -323,6 +323,73 @@
     [self refreshAnimated:animated];
 }
 
+#pragma mark - Other
+
+- (void)refreshAnimated:(BOOL)animated {
+    [UIView animateWithDuration:animated?ZoomAnimationDuration:0 animations:^{
+        switch (self.position) {
+            case GKPictureInPictureViewPositionTopLeft:
+            {
+                self.rightConstraint.active = NO;
+                self.bottomConstraint.active = NO;
+                self.leftConstraint.active = YES;
+                self.topConstraint.active = YES;
+                break;
+            }
+            case GKPictureInPictureViewPositionTopRight:
+            {
+                self.leftConstraint.active = NO;
+                self.bottomConstraint.active = NO;
+                self.rightConstraint.active = YES;
+                self.topConstraint.active = YES;
+                break;
+            }
+            case GKPictureInPictureViewPositionBottomLeft:
+            {
+                self.rightConstraint.active = NO;
+                self.topConstraint.active = NO;
+                self.leftConstraint.active = YES;
+                self.bottomConstraint.active = YES;
+                break;
+            }
+            case GKPictureInPictureViewPositionBottomRight:
+            {
+                self.leftConstraint.active = NO;
+                self.topConstraint.active = NO;
+                self.rightConstraint.active = YES;
+                self.bottomConstraint.active = YES;
+                break;
+            }
+            default:
+                break;
+        }
+        
+        switch (self.sizeClass) {
+            case GKPictureInPictureViewSizeSmall:
+            {
+                self.widthConstraint.constant = self.smallSize.width;
+                self.heightConstraint.constant = self.smallSize.height;
+                break;
+            }
+            case GKPictureInPictureViewSizeLarge:
+            {
+                self.widthConstraint.constant = self.largeSize.width;
+                self.heightConstraint.constant = self.largeSize.height;
+                break;
+            }
+            default:
+                break;
+        }
+        
+        [self.superview layoutIfNeeded];
+        //        self.frame = [self rectForPosition:self.position sizeClass:self.sizeClass inView:self.superview];
+    }];
+}
+
+- (BOOL)isVisible {
+    return (self.superview != nil);
+}
+
 #pragma mark - Helper
 
 - (CGRect)rectForPosition:(GKPictureInPictureViewPosition)position sizeClass:(GKPictureInPictureViewSize)sizeClass inView:(UIView *)view {
@@ -394,67 +461,6 @@
 
 - (CGPoint)centerForPostion:(GKPictureInPictureViewPosition)position {
     return [self centerForRect:[self rectForPosition:position sizeClass:self.sizeClass inView:self.superview]];
-}
-
-- (void)refreshAnimated:(BOOL)animated {
-    [UIView animateWithDuration:animated?ZoomAnimationDuration:0 animations:^{
-        switch (self.position) {
-            case GKPictureInPictureViewPositionTopLeft:
-            {
-                self.rightConstraint.active = NO;
-                self.bottomConstraint.active = NO;
-                self.leftConstraint.active = YES;
-                self.topConstraint.active = YES;
-                break;
-            }
-            case GKPictureInPictureViewPositionTopRight:
-            {
-                self.leftConstraint.active = NO;
-                self.bottomConstraint.active = NO;
-                self.rightConstraint.active = YES;
-                self.topConstraint.active = YES;
-                break;
-            }
-            case GKPictureInPictureViewPositionBottomLeft:
-            {
-                self.rightConstraint.active = NO;
-                self.topConstraint.active = NO;
-                self.leftConstraint.active = YES;
-                self.bottomConstraint.active = YES;
-                break;
-            }
-            case GKPictureInPictureViewPositionBottomRight:
-            {
-                self.leftConstraint.active = NO;
-                self.topConstraint.active = NO;
-                self.rightConstraint.active = YES;
-                self.bottomConstraint.active = YES;
-                break;
-            }
-            default:
-                break;
-        }
-        
-        switch (self.sizeClass) {
-            case GKPictureInPictureViewSizeSmall:
-            {
-                self.widthConstraint.constant = self.smallSize.width;
-                self.heightConstraint.constant = self.smallSize.height;
-                break;
-            }
-            case GKPictureInPictureViewSizeLarge:
-            {
-                self.widthConstraint.constant = self.largeSize.width;
-                self.heightConstraint.constant = self.largeSize.height;
-                break;
-            }
-            default:
-                break;
-        }
-
-        [self.superview layoutIfNeeded];
-//        self.frame = [self rectForPosition:self.position sizeClass:self.sizeClass inView:self.superview];
-    }];
 }
 
 - (void)setFarState {
