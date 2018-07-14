@@ -28,6 +28,7 @@
 @property (nonatomic, strong) NSLayoutConstraint *topConstraint;
 
 @property (nonatomic) CGFloat decelerationRate;
+@property (nonatomic) BOOL visible;
 
 @end
 
@@ -100,6 +101,7 @@
     self.bottomLeftPositionEnabled = YES;
     self.bottomRightPositionEnabled = YES;
     self.resizeEnabled = YES;
+    self.visible = self.superview ? YES : NO;
     
     // Add constraints
     
@@ -281,16 +283,20 @@
     
     [self refreshAnimated:NO];
     [self setFarState];
+    self.visible = YES;
     
     [superview addSubview:self];
     
     [UIView animateWithDuration:animated?ShowHideAnimationDuration:0 animations:^{
         [self setNormalState];
     }];
+    
 }
 
 - (void)removeFromSuperviewAnimated:(BOOL)animated {
     if (!self.superview) return;
+    
+    self.visible = NO;
     
     [UIView animateWithDuration:animated?ShowHideAnimationDuration:0 animations:^{
         [self setFarState];
@@ -390,7 +396,7 @@
 }
 
 - (BOOL)isVisible {
-    return (self.superview != nil);
+    return self.visible;
 }
 
 #pragma mark - Helper
