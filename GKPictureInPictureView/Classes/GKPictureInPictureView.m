@@ -452,7 +452,7 @@
     if (fabs([self distanceBetweenPoint:point andPoint:bottomRightPosition]) < winnerDistance &&
         self.bottomRightPositionEnabled) {
         position = GKPictureInPictureViewPositionBottomRight;
-        winnerDistance = fabs([self distanceBetweenPoint:point andPoint:bottomRightPosition]);
+//        winnerDistance = fabs([self distanceBetweenPoint:point andPoint:bottomRightPosition]);
     }
     
     return position;
