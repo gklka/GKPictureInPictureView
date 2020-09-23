@@ -186,6 +186,11 @@
     
     if (gesutreRecognizer.state == UIGestureRecognizerStateBegan) {
         self.panInitialCenter = piece.center;
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(pictureInPictureViewBeganDragging:)]) {
+            [self.delegate pictureInPictureViewBeganDragging:self];
+        }
+        return;
     }
     
     if (gesutreRecognizer.state != UIGestureRecognizerStateCancelled) {
@@ -205,6 +210,11 @@
             } completion:^(BOOL finished) {
                 [self refreshAnimated:NO];
             }];
+
+            if (self.delegate &&
+                [self.delegate respondsToSelector:@selector(pictureInPictureViewEndedDragging:)]) {
+                [self.delegate pictureInPictureViewEndedDragging:self];
+            }
         }
     } else {
         piece.center = self.panInitialCenter;
@@ -231,7 +241,6 @@
             }];
         }
     }
-    
 }
 
 - (void)doubleTap:(UITapGestureRecognizer *)gestureRecognizer {

@@ -62,4 +62,12 @@
     [self.pipView setPosition:position animated:YES];
 }
 
+- (void)pictureInPictureViewBeganDragging:(GKPictureInPictureView *)pictureInPictureView {
+    NSLog(@"%@ began dragging", pictureInPictureView);
+}
+
+- (void)pictureInPictureViewEndedDragging:(GKPictureInPictureView *)pictureInPictureView {
+    NSLog(@"%@ ended dragging", pictureInPictureView);
+}
+
 @end

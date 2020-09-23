@@ -42,6 +42,20 @@ typedef NS_ENUM(NSUInteger, GKPictureInPictureViewSize) {
  */
 - (void)pictureInPictureView:(GKPictureInPictureView *)pictureInPictureView changedSizeClass:(GKPictureInPictureViewSize)sizeClass;
 
+/**
+ This method will be called when the user start to drag the view.
+ 
+ @property pictureInPictureView The view which has changed position
+ */
+- (void)pictureInPictureViewBeganDragging:(GKPictureInPictureView *)pictureInPictureView;
+
+/**
+ This method will be called when the user stops dragging operation.
+ 
+ @property pictureInPictureView The view which has changed position
+ */
+- (void)pictureInPictureViewEndedDragging:(GKPictureInPictureView *)pictureInPictureView;
+
 @end
 
 
